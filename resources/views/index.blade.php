@@ -11,7 +11,7 @@
          <!-- URL link to other pages by passing route function, 
         followed by route name eg route('tasks.show',
         and route parameters as the second argument eg ['id' => $task->id] -->
-        <a href="{{ route('tasks.show', ['id' => $task->id]) }}">{{ $task->title }}</a>
+        <a href="{{ route('tasks.show', ['task' => $task->id]) }}">{{ $task->title }}</a>
       </div>
     @empty
     <div>There are no tasks!</div>
