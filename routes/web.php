@@ -26,7 +26,7 @@ Route::get('/', function () {
 // routes should have common prefix eg 'tasks'
 Route::get('/tasks', function () {
     return view('index', [
-        'tasks' => Task::latest()->get()
+        'tasks' => Task::latest()->paginate(10)
     ]);
 })->name('tasks.index');
 
@@ -81,6 +81,13 @@ Route::delete('/tasks/{task}', function (Task $task) {
     ->withj('success', 'Task delete successfully!');
 })->name('tasks.destroy');
 
+Route::put('tasks/{task}/toggle-complete', function(Task $task) {
+
+    $task->toggleComplete();
+
+    return redirect()->back()->with('success', 'Task updated successfully!');
+})->name('tasks.toggle-complete');
+
 
 
 // // new url
@@ -107,6 +114,6 @@ Route::delete('/tasks/{task}', function (Task $task) {
 // Delete
 
 Route::fallback(function () {
-    return 'Welcome to the whitespace';
+    return 'you have wandered into nowhere...you should click away';
 });
 

@@ -1,20 +1,24 @@
 @extends('layouts.app')
 
-@section('title', 'The list of tasks')
+@section('title', 'The List of Tasks')
 
 @section('content')
-  <!-- @if(count($tasks)) -->
-  <!-- for else displays all elements on the list, if there are any -->
-  <!-- if the list is empty you then display the alternative -->
-    @forelse($tasks as $task)
-      <div>
-         <!-- URL link to other pages by passing route function, 
-        followed by route name eg route('tasks.show',
-        and route parameters as the second argument eg ['id' => $task->id] -->
-        <a href="{{ route('tasks.show', ['task' => $task->id]) }}">{{ $task->title }}</a>
-      </div>
-    @empty
+  <nav class="mb-4">
+    <a href="{{ route('tasks.create') }}" class="link">Add Task!</a>
+  </nav>
+
+  @forelse ($tasks as $task)
+    <div>
+      <a href="{{ route('tasks.show', ['task' => $task->id]) }}"
+        @class(['line-through' => $task->completed])>{{ $task->title }}</a>
+    </div>
+  @empty
     <div>There are no tasks!</div>
-    @endforelse
-  <!-- @endif -->
+  @endforelse
+
+  @if ($tasks->count())
+    <nav class="mt-4">
+      {{ $tasks->links() }}
+    </nav>
+  @endif
 @endsection
